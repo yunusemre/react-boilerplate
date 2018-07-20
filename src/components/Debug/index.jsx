@@ -6,11 +6,7 @@ import JSONTree from 'react-json-tree';
 import {
   enableActionLogs,
   disableActionLogs,
-  enableBlacklistedActionLogs,
-  disableBlacklistedActionLogs,
 } from '../../actions/Debug';
-
-import loggerConfig from '../../config/logger';
 
 import './style.css';
 
@@ -24,7 +20,6 @@ class Debug extends Component {
 
     this.onClick = this.onClick.bind(this);
     this.toggleActionLogs = this.toggleActionLogs.bind(this);
-    this.toggleBlacklistedActionLogs = this.toggleBlacklistedActionLogs.bind(this);
   }
 
   onClick() {
@@ -39,14 +34,6 @@ class Debug extends Component {
       this.props.dispatch(enableActionLogs());
     } else {
       this.props.dispatch(disableActionLogs());
-    }
-  }
-
-  toggleBlacklistedActionLogs(e) {
-    if (e.target.checked) {
-      this.props.dispatch(enableBlacklistedActionLogs());
-    } else {
-      this.props.dispatch(disableBlacklistedActionLogs());
     }
   }
 
@@ -66,7 +53,7 @@ class Debug extends Component {
 
         <div className="debug--outer-wrapper">
           <div className="json-tree--wrapper">
-            <JSONTree data={this.props.fullState.toJS()} hideRoot />
+            <JSONTree data={this.props.fullState} hideRoot />
           </div>
 
           <section className="content--wrapper">
@@ -91,38 +78,11 @@ class Debug extends Component {
                           id="debug-logs-enabled"
                           type="checkbox"
                           onChange={this.toggleActionLogs}
-                          checked={this.props.settings.getIn(['logs', 'enabled'])}
+                          checked={this.props.settings.logs.enabled}
                         />
                         <label htmlFor="debug-logs-enabled">Enabled</label>
                       </div>
                     </div>
-
-                    <div className="form-group">
-                      <div className="form-item">
-                        <input
-                          id="debug-logs-show-blacklisted"
-                          type="checkbox"
-                          onChange={this.toggleBlacklistedActionLogs}
-                          checked={this.props.settings.getIn(['logs', 'blacklisted'])}
-                        />
-                        <label htmlFor="debug-logs-show-blacklisted">Blacklisted</label>
-                      </div>
-                    </div>
-
-                    <p className="description">
-                      The following actions are blacklisted and will not be logged
-                      to prevent spamming.
-                    </p>
-                    <ul>
-                      {loggerConfig.blacklist.map((action, index) => {
-                        const type = action.toLowerCase().replace(/_+/g, '-');
-                        return (
-                          <li key={`debug--blacklisted-action--${type}`}>
-                            {action}
-                          </li>
-                        );
-                      })}
-                    </ul>
                   </form>
                 </div>
 
@@ -147,7 +107,7 @@ class Debug extends Component {
 function mapStateToProps(state, ownProps) {
   return {
     fullState: state,
-    settings: state.get('debug'),
+    settings: state.debug,
   };
 }
 

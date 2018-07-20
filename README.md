@@ -29,6 +29,4 @@ This extension also has built-in support for the following extensions:
 
 Optional extensions that might be handy.
 
-### Chrome
-
-- [ImmutableJS Object Formatter](https://chrome.google.com/webstore/detail/immutablejs-object-format/hgldghadipiblonfkkicmgcbbijnpeog)
+- [cra-gen](https://github.com/kkoomen/cra-gen)
