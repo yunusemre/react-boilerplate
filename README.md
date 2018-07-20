@@ -7,7 +7,6 @@ An extension of create-react-app (ejected) with some extras:
 - redux
 - redux-thunk
 - routing
-- ImmutableJS
 - local storage (for the redux state)
 - basic structure
 
