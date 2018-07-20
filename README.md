@@ -9,6 +9,7 @@ An extension of create-react-app (ejected) with some extras:
 - routing
 - local storage (for the redux state)
 - basic structure
+- bootstrap 4
 
 This extension also has built-in support for the following extensions:
 
